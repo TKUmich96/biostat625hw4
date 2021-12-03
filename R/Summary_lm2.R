@@ -21,6 +21,9 @@ summary_lm2 = function(lm_mod, res_display = TRUE){
   df.residual = lm_mod$df
   betas = lm_mod$betas
   
+  sourceCpp("CPP_CalValue.cpp")
+  res = get_Cal_val(lm_mod$x,lm_mod$y)
+  
   ########## Residuals ##########
   resid_val.tb = round(quantile(resid_val),4)
   names(resid_val.tb) = c("Min", "1Q", "Median", "3Q", "Max")
