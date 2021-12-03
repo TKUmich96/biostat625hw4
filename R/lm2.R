@@ -56,7 +56,7 @@ lm2 = function(formula, data, res_display = TRUE){
   # noquote could take string from quotation marks
   call = noquote(paste(c('lm(formula = ', formula, ')'), collapse = ''))
 
-  output <- list(call,beta,x,y,missing_n)
+  output <- list(call,beta[,1],x,y,missing_n)
   names(output) <- c("call", "coefficients","x", "y","missing.N")
 
   if(res_display == T){

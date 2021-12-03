@@ -31,7 +31,7 @@ summary_lm2 = function(lm_mod){
   SES = sqrt(diag(res$xtx)) * sqrt(SSE/df.residual)
   
   ########## T statistics and its related P-values ########## 
-  tstats = beta_coef[,1] / SES
+  tstats = beta_coef / SES
   pvalues = 2*pt(abs(tstats), df = df.residual, lower.tail=FALSE)
   coef_tb = data.frame("Estimate" = round(beta_coef,4), "Std. Error" = round(SES,4),
                        "t value" = round(tstats,3), "Pr(>|t|)" = signif(pvalues,3),check.names = F)
