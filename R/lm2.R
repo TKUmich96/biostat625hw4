@@ -64,7 +64,7 @@ lm2 = function(formula, data, na.handle = "na.omit", res_display = TRUE){
   call = noquote(paste(c('lm(formula = ', formula, ')'), collapse = ''))
 
   output <- list(call,beta[,1],resid_val,x,y,missing_n)
-  names(output) <- c("call", "coefficients","residuals","x", "y","missing.N",)
+  names(output) <- c("call", "coefficients","residuals","x", "y","missing.N")
 
   if(res_display == T){
     cat("Call: ", "\n",
