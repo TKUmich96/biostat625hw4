@@ -4,7 +4,7 @@
 \alias{summary_lm2}
 \title{summary_lm2}
 \usage{
-summary_lm2(lm_mod, res_display = F)
+summary_lm2(lm_mod, res_display = TRUE)
 }
 \arguments{
 \item{lm_mod}{return of lm2.}

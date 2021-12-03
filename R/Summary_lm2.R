@@ -65,25 +65,25 @@ summary_lm2 = function(lm_mod, res_display = TRUE){
   ########## Rank ##########
   rk = length(beta_coef)
   
-  output  = list(lm_mod$call, resid_val.tb, coef_res, signif(RSE,4), df.residual, signif(R2,4), signif(R2adj,4), 
-                 round(F.stat3,3), signif(F.p_val,4), lm_mod$missing.N, var_cov_mat, rk)
+  output  = list(lm_mod$call, resid_val, coef_res, RSE, df.residual, R2, R2adj, 
+                 F.stat3, F.p_val, lm_mod$missing.N, var_cov_mat, rk,resid_val.tb)
   names(output)  = c("call", "residuals", "coefficients", "RSE", "df","r.squared", "adj.r.squared", 
-                     "fstatistic","f.pval", "missing.N","cov.unscaled","rank")
+                     "fstatistic","f.pval", "missing.N","cov.unscaled","rank", "resd.tb")
   
   if(res_display == T){
     cat("Call: ", "\n", output$call, "\n", ' ', "\n", "Residuals: ","\n",sep ="")
-    print(output$residuals)
+    print(output$resid_val.tb)
     cat("\n","Coefficients: ", "\n",sep="")
     print(output$coefficients)
     cat("---","\n", "Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1","\n",sep ="")
-    cat("\n","Residual standard error: ", output$RSE, " on ", output$df, " degrees of freedom","\n",sep ="")
+    cat("\n","Residual standard error: ", signif(output$RSE,4), " on ", output$df, " degrees of freedom","\n",sep ="")
     if(output$missing.N>0){
       cat("  (",output$missing.N," observation deleted due to missingness)","\n",sep="")
     }
     
-    cat(c("Multiple R-Squared: ", output$r.squared, ", Adjusted R-squared: ", output$adj.r.squared, "\n",
-          "F-Statistic: ", output$fstatistic[1], " on ", output$fstatistic[2], " and ", output$fstatistic[3],
-          " DF, p-value: ", output$f.pval), sep = "")
+    cat(c("Multiple R-Squared: ", signif(output$r.squared,4), ", Adjusted R-squared: ", signif(output$adj.r.squared,4), "\n",
+          "F-Statistic: ", round(output$fstatistic[1],3), " on ", output$fstatistic[2], " and ", output$fstatistic[3],
+          " DF, p-value: ", signif(output$f.pval,4)), sep = "")
   }
 
   return(invisible(output))
