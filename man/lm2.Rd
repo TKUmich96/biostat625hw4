@@ -12,7 +12,7 @@ lm2(formula, data, na.handle = "na.omit", res_display = TRUE)
 \item{data}{Data that perform the linear regression on
 #'}
 
-\item{na.handle}{Opition to deal with NA. Three options valid: "na.omit"-- omit NA in data, "na.pass"-- do not change on data, and "na.fail" -- Report an error and stop the function}
+\item{na.handle}{Opition to deal with NA. Two options valid: "na.omit"-- omit NA in data, and "na.fail" -- Report an error and stop the function}
 
 \item{res_display}{Bool value that used to contorl display lm2 result or not}
 }
