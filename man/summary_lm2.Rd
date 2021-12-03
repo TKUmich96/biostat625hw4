@@ -8,6 +8,8 @@ summary_lm2(lm_mod, res_display = TRUE)
 }
 \arguments{
 \item{lm_mod}{return of lm2.}
+
+\item{res_display}{Bool value that used to contorl display summary_lm2 result or not}
 }
 \value{
 a list that contains the following values: call, residuals, coefficients, RSE, df.residual, r.squared, adj.r.squared, fstatistic, f.pval, missing.N, cov.unscaled

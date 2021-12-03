@@ -4,6 +4,8 @@
 #'
 #'@param lm_mod return of lm2.
 #'
+#'@param res_display Bool value that used to contorl display summary_lm2 result or not
+#'
 #'@return a list that contains the following values: call, residuals, coefficients, RSE, df.residual, r.squared, adj.r.squared, fstatistic, f.pval, missing.N, cov.unscaled
 #'
 #'@examples
@@ -15,9 +17,8 @@
 summary_lm2 = function(lm_mod, res_display = TRUE){
   beta_coef = lm_mod$coefficients
   resid_val = lm_mod$residuals
-  res = get_Cal_val(lm_mod$x,lm_mod$y)
-  fitted_val = res$fitted_val
-  df.residual = res$df
+  fitted_val = lm_mod$fitted.values
+  df.residual = lm_mod$df
   
   ########## Residuals ##########
   resid_val.tb = round(quantile(resid_val),4)
@@ -64,9 +65,9 @@ summary_lm2 = function(lm_mod, res_display = TRUE){
   ########## Rank ##########
   rk = length(beta_coef)
   
-  output  = list(lm_mod$call, resid_val, coef_res, RSE, df.residual, R2, R2adj, 
+  output  = list(lm_mod$call, resid_val, coef_res, fitted_val, RSE, df.residual, R2, R2adj, 
                  F.stat3, F.p_val, lm_mod$missing.N, var_cov_mat, rk,resid_val.tb, coef.tb)
-  names(output)  = c("call", "residuals", "coefficients", "RSE", "df","r.squared", "adj.r.squared", 
+  names(output)  = c("call", "residuals", "coefficients", "fitted.values","RSE", "df","r.squared", "adj.r.squared", 
                      "fstatistic","f.pval", "missing.N","cov.unscaled","rank", "resd.tb", "coef.tb")
   
   if(res_display == T){
