@@ -6,7 +6,7 @@
 #'
 #'@param data Data that perform the linear regression on
 #'#'
-#'@param na.handle Opition to deal with NA. Three options valid: "na.omit"-- omit NA in data, "na.pass"-- do not change on data, and "na.fail" -- Report an error and stop the function
+#'@param na.handle Opition to deal with NA. Two options valid: "na.omit"-- omit NA in data, and "na.fail" -- Report an error and stop the function
 #'
 #'@param res_display Bool value that used to contorl display lm2 result or not
 #'
@@ -41,8 +41,6 @@ lm2 = function(formula, data, na.handle = "na.omit", res_display = TRUE){
   if(any(is.na(data))){
     if(na.handle == "na.omit"){
       data = data[complete.cases(data), ]
-    } else if(na.handle == "na.pass"){
-      data = data
     } else if(na.handle == "na.fail"){
       stop("Missing values contains in study, please handle!")
     }

@@ -4,12 +4,15 @@
 \alias{lm2}
 \title{lm2}
 \usage{
-lm2(formula, data, res_display = TRUE)
+lm2(formula, data, na.handle = "na.omit", res_display = TRUE)
 }
 \arguments{
 \item{formula}{An object of class "formula" that models regression to be fit}
 
-\item{data}{Data that perform the linear regression on}
+\item{data}{Data that perform the linear regression on
+#'}
+
+\item{na.handle}{Opition to deal with NA. Three options valid: "na.omit"-- omit NA in data, "na.pass"-- do not change on data, and "na.fail" -- Report an error and stop the function}
 
 \item{res_display}{Bool value that used to contorl display lm2 result or not}
 }
