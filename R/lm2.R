@@ -64,7 +64,7 @@ lm2 = function(formula, data, res_display = TRUE){
         output$call, "\n",
         ' ', "\n",
         "Coefficients: ","\n",sep ="")
-    print(round(output$coefficients[,1],4))
+    print(round(output$coefficients,4))
   }
 
   return(invisible(output))
