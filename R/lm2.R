@@ -1,21 +1,23 @@
 #'lm2
 #'
-#'lm2 is used to fit linear models with regression
+#'lm2 is used to fit linear models with regression.
 #'
-#'@param formula An object of class "formula" that models regression to be fit
+#'@param formula An object of class "formula" that models regression to be fit.
 #'
-#'@param data Data that perform the linear regression on
-#'#'
-#'@param na.handle Opition to deal with NA. Two options valid: "na.omit"-- omit NA in data, and "na.fail" -- Report an error and stop the function
+#'@param data Data that perform the linear regression on.
 #'
-#'@param res_display Bool value that used to contorl display lm2 result or not
+#'@param na.handle Opition to deal with NA. Two options valid: "na.omit"-- omit NA in data, and "na.fail" -- Report an error and stop the function. The default value is set to "na.omit".
+#'
+#'@param res_display Bool value that used to contorl display lm2 result or not. The default value is set to TRUE. Set it to FALSE if displaying is not required.
+#'
 #'
 #'@examples
-#'lm2(formula = fixed.acidity ~ volatile.acidity + citric.acid * residual.sugar, data = wine)
-#'example <- lm2(formula = quality ~ free.sulfur.dioxide:pH + pH, data = wine)
-#'example$coefficients
+#'lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.omit")
 #'
-#'@return a list that contains the following values: coefficients, call, x, y, Missing.N
+#'result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+#'result$coefficients
+#'
+#'@return A list that contains the following values: call(formula), coefficients, residuals, fitted.values, x(independent variables), y(dependent variable),missing.N(missing numbers of data due to NA), df(residual degree of freedom) and betas(coefficient in other format)
 #'
 #'@importFrom stats model.matrix
 #'

@@ -1,16 +1,21 @@
 #'summary_lm2
 #'
-#'summary_lm2 is used to summarize fit for linear regression models
+#'summary_lm2 is used to summarize fit for linear regression models.
 #'
-#'@param lm_mod return of lm2.
+#'@param lm_mod output value of lm2() in 'lm2Wsmry'.
 #'
-#'@param res_display Bool value that used to contorl display summary_lm2 result or not
+#'@param res_display Bool value that used to contorl display summary_lm2 result or not. The default value is set to TRUE. Set it to FALSE if displaying is not required.
 #'
-#'@return a list that contains the following values: call, residuals, coefficients, RSE, df.residual, r.squared, adj.r.squared, fstatistic, f.pval, missing.N, cov.unscaled
+#'@return a list that contains the following values: call(formula), residuals, coefficients, fitted.values, RSE, df(degree of freedom), r.squared, adj.r.squared, F statistic, f.pval(p-value), missing.N(missing numbers of data due to NA), cov.unscaled(unscaled covarience), rank, resd.tb(residual quntile table), coef.tb(coefficient table with significant level).
 #'
 #'@examples
+#'summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F))
 #'
-#'@importFrom stats model.matrix
+#'result = summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F), res_display = F)
+#'result$resd.tb
+#'result$rank
+#'
+#'@importFrom stats pt quantile
 #'
 #'@export
 

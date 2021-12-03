@@ -7,24 +7,24 @@
 lm2(formula, data, na.handle = "na.omit", res_display = TRUE)
 }
 \arguments{
-\item{formula}{An object of class "formula" that models regression to be fit}
+\item{formula}{An object of class "formula" that models regression to be fit.}
 
-\item{data}{Data that perform the linear regression on
-#'}
+\item{data}{Data that perform the linear regression on.}
 
-\item{na.handle}{Opition to deal with NA. Two options valid: "na.omit"-- omit NA in data, and "na.fail" -- Report an error and stop the function}
+\item{na.handle}{Opition to deal with NA. Two options valid: "na.omit"-- omit NA in data, and "na.fail" -- Report an error and stop the function. The default value is set to "na.omit".}
 
-\item{res_display}{Bool value that used to contorl display lm2 result or not}
+\item{res_display}{Bool value that used to contorl display lm2 result or not. The default value is set to TRUE. Set it to FALSE if displaying is not required.}
 }
 \value{
-a list that contains the following values: coefficients, call, x, y, Missing.N
+A list that contains the following values: call(formula), coefficients, residuals, fitted.values, x(independent variables), y(dependent variable),missing.N(missing numbers of data due to NA), df(residual degree of freedom) and betas(coefficient in other format)
 }
 \description{
-lm2 is used to fit linear models with regression
+lm2 is used to fit linear models with regression.
 }
 \examples{
-lm2(formula = fixed.acidity ~ volatile.acidity + citric.acid * residual.sugar, data = wine)
-example <- lm2(formula = quality ~ free.sulfur.dioxide:pH + pH, data = wine)
-example$coefficients
+lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.omit")
+
+result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+result$coefficients
 
 }
