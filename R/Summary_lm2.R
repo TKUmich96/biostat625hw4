@@ -14,10 +14,9 @@
 
 summary_lm2 = function(lm_mod, res_display = TRUE){
   beta_coef = lm_mod$coefficients
-  
+  resid_val = lm_mod$residuals
   res = get_Cal_val(lm_mod$x,lm_mod$y)
   fitted_val = res$fitted_val
-  resid_val = res$resid_val
   df.residual = res$df
   
   ########## Residuals ##########
