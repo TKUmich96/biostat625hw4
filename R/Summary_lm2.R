@@ -32,8 +32,8 @@ summary_lm2 = function(lm_mod, res_display = TRUE){
   ########## T statistics and its related P-values ########## 
   tstats = beta_coef / SES
   pvalues = 2*pt(abs(tstats), df = df.residual, lower.tail=FALSE)
-  coef_tb = data.frame("Estimate" = round(beta_coef,4), "Std. Error" = round(SES,4),
-                       "t value" = round(tstats,3), "Pr(>|t|)" = signif(pvalues,3),check.names = F)
+  coef_res = data.frame("Estimate" = beta_coef, "Std. Error" = SES,
+                       "t value" = tstats, "Pr(>|t|)" = pvalues, check.names = F)
   sig = c()
   sig = sapply(1:length(pvalues), function(i) {
     if(pvalues[i] < 0.001){sig[i] = '***'} 
@@ -42,8 +42,8 @@ summary_lm2 = function(lm_mod, res_display = TRUE){
     else if (pvalues[i] < 0.1){sig[i] = '.  '} 
     else{sig[i] = ''}
   })
-  coef_res = cbind(coef_tb, sig)
-  colnames(coef_res)[5] = ""
+  coef.tb = cbind(signif(coef_res,4), sig)
+  colnames(coef.tb)[5] = ""
 
   ########## R-Squared ##########
   R2  = 1- sum(resid_val^2) / SSyy
@@ -65,9 +65,9 @@ summary_lm2 = function(lm_mod, res_display = TRUE){
   rk = length(beta_coef)
   
   output  = list(lm_mod$call, resid_val, coef_res, RSE, df.residual, R2, R2adj, 
-                 F.stat3, F.p_val, lm_mod$missing.N, var_cov_mat, rk,resid_val.tb)
+                 F.stat3, F.p_val, lm_mod$missing.N, var_cov_mat, rk,resid_val.tb,coef.tb)
   names(output)  = c("call", "residuals", "coefficients", "RSE", "df","r.squared", "adj.r.squared", 
-                     "fstatistic","f.pval", "missing.N","cov.unscaled","rank", "resd.tb")
+                     "fstatistic","f.pval", "missing.N","cov.unscaled","rank", "resd.tb", "coef.tb")
   
   if(res_display == T){
     cat("Call: ", "\n", output$call, "\n", ' ', "\n", "Residuals: ","\n",sep ="")
