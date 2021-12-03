@@ -62,10 +62,13 @@ summary_lm2 = function(lm_mod){
   ########## Unscaled var-covarience matrix ##########
   var_cov_mat  = solve(t(lm_mod$x) %*% lm_mod$x)
   
+  ########## Rank ##########
+  rk = nrow(beta_coef)
+  
   output  = list(lm_mod$call, resid_val.tb, coef_res, signif(RSE,4), df.residual, signif(R2,4), signif(R2adj,4), 
-                 round(F.stat3,3), signif(F.p_val,4), lm_mod$missing.N, var_cov_mat)
+                 round(F.stat3,3), signif(F.p_val,4), lm_mod$missing.N, var_cov_mat, rk)
   names(output)  = c("call", "residuals", "coefficients", "RSE", "df","r.squared", "adj.r.squared", 
-                     "fstatistic","f.pval", "missing.N","cov.unscaled")
+                     "fstatistic","f.pval", "missing.N","cov.unscaled","rank")
   
   cat("Call: ", "\n", output$call, "\n", ' ', "\n", "Residuals: ","\n",sep ="")
   print(output$residuals)
