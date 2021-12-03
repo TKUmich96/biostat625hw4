@@ -56,6 +56,7 @@ lm2 = function(formula, data, na.handle = "na.omit", res_display = TRUE){
 
   beta = res$beta
   rownames(beta) = c('(Intercept)',dpdt_var)
+  coef = beta[,1]
   
   resid_val = res$resid_val[,1]
   names(resid_val) = row.names(data)
@@ -68,8 +69,8 @@ lm2 = function(formula, data, na.handle = "na.omit", res_display = TRUE){
   # noquote could take string from quotation marks
   call = noquote(paste(c('lm(formula = ', formula, ')'), collapse = ''))
 
-  output <- list(call,beta[,1],resid_val,fitted_val,x,y,missing_n,df.residual)
-  names(output) <- c("call", "coefficients","residuals","fitted.values","x", "y","missing.N","df")
+  output <- list(call,coef,resid_val,fitted_val,x,y,missing_n,df.residual, beta)
+  names(output) <- c("call", "coefficients","residuals","fitted.values","x", "y","missing.N","df", "betas")
 
   if(res_display == T){
     cat("Call: ", "\n",

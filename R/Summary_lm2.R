@@ -19,6 +19,7 @@ summary_lm2 = function(lm_mod, res_display = TRUE){
   resid_val = lm_mod$residuals
   fitted_val = lm_mod$fitted.values
   df.residual = lm_mod$df
+  betas = lm_mod$betas
   
   ########## Residuals ##########
   resid_val.tb = round(quantile(resid_val),4)
@@ -31,9 +32,9 @@ summary_lm2 = function(lm_mod, res_display = TRUE){
   SES = sqrt(diag(res$xtx)) * sqrt(SSE/df.residual)
   
   ########## T statistics and its related P-values ########## 
-  tstats = beta_coef / SES
+  tstats = betas / SES
   pvalues = 2*pt(abs(tstats), df = df.residual, lower.tail=FALSE)
-  coef_res = data.frame("Estimate" = beta_coef, "Std. Error" = SES,
+  coef_res = data.frame("Estimate" = betas, "Std. Error" = SES,
                        "t value" = tstats, "Pr(>|t|)" = pvalues, check.names = F)
   sig = c()
   sig = sapply(1:length(pvalues), function(i) {

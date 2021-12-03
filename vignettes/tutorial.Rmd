@@ -18,3 +18,159 @@ knitr::opts_chunk$set(
 library(lm2Wsmry)
 ```
 
+##### For non-NA case
+A data set containing information regarding violent crime rates by us state named "USArrests" is used to test for non-NA case in this package.
+```{r}
+data("USArrests")
+```
+
+##### For NA-included case
+A data set containing information regarding air quality named "airquality" is used to test for NA-included case in this package.
+```{r}
+data("airquality")
+```
+
+
+### To use the function `lm2`:
+lm2 is a function that is designed to fit linear model regressions. There are three input argumanet, which are \textbf{\textit{formula}}, \textbf{\textit{data}} and \textbf{\textit{res_display}}. \textbf{\textit{formula}} is the formula that linear regressions follow, \textbf{\textit{data}} is the data set that regression depend on, and \textbf{\textit{res_display}} is used to control whether the function display the result or not. The input value for \textbf{\textit{formula}} and \textbf{\textit{data}}are required, but that for \textbf{\textit{res_display}} is not required. 
+    
+**Use the function lm2 to display result**         
+*Note: the default of res_display is set to TRUE if input value is excluded*
+```{r, message=FALSE}
+lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests)
+```
+
+**Use the function lm2 to return output without result displaying**
+```{r}
+# nothing shows up
+lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+```
+
+```{r}
+# get the information in the output
+result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+result$coefficients
+```
+
+**Include interaction terms** 
+Like the `lm()`, there are two ways to include interaction terms:
+
+1) Using \textbf{*} to include main effects and interaction 
+```{r}
+lm2(formula = Rape ~ Murder*Assault, data = USArrests)
+```
+  
+2) Using \textbf{:} to include \textb{only} the interaction and exclude main effects
+```{r}
+lm2(formula = Rape ~ Murder:Assault, data = USArrests)
+```
+
+**Deal with NA valus** 
+
+1) Using 'na.omit' or without any action for \textbf{'na.handle'}  
+```{r}
+lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.omit")
+```
+
+2) Using 'na.fail' for \textbf{'na.handle'}  
+```{r, error=TRUE}
+lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.fail")
+```
+
+
+### Benchmark `lm2` against `lm`:
+In this section, we will compare the outputs of `lm2()` against `lm()`. To begin, we will save the outputs from both `lm2` and `lm` functions.
+```{r}
+mod_lm2 <- lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+mod_lm <- lm(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests)
+```
+      
+Below, we use `all.equal` and `mark` functions from base R and `bench` package, respectively, to compare outputs from `lm2` and `lm`.
+  
+**Compare: Coefficients **
+```{r}
+# Note default na.action matches lm function
+all.equal(mod_lm2$coefficients, mod_lm$coefficients) 
+bench::mark(mod_lm2$coefficients, mod_lm$coefficients) 
+```
+
+**Compare: Fitted Values**
+```{r}
+all.equal(mod_lm2$fitted.values, mod_lm$fitted.values) 
+bench::mark(mod_lm2$fitted.values, mod_lm$fitted.values) 
+```
+
+### To use the function `summarylm2()`:
+`summary_lm2` is a function that takes an output of function `lm2()` and returns important statistics information for a linear regression model. There are two input argumanet, which are \textbf{\textit{lm_mod}} and \textbf{\textit{res_display}}. \textbf{\textit{lm_mod}} is the result given by `lm()`, and \textbf{\textit{res_display}} is used to control whether the function display the result or not. The input value for \textbf{\textit{lm_mod}}are required, but that for \textbf{\textit{res_display}} is not required. 
+
+**Use the function summary_lm2 to display result**
+*Note: the default of res_display is set to TRUE if input value is excluded*
+```{r}
+summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F))
+```
+  
+**Use the function lm2 to return output without result displaying**
+```{r}
+# nothing shows up
+summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F), res_display = F)
+```
+
+#### Access calculated statistics
+To save important information that calculated, `$` could be used. Variables that avaliable for accessing are: residual table (in quartiles), coefficients, standard error, t-values, and p-values, which are displayed in the output, and variance-covarience matrix  and rank, which are not displayed in the output.
+```{r}
+# get the information in the output
+result = summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F), res_display = F)
+# something displays in the result
+result$resd.tb
+# something that does not disply in the result
+result$rank
+```
+
+### Benchmark `summarylm2` against `summary`:
+In this section, we will compare the outputs of `summary_lm2` used in conjunction with `lm2()` to that of `summary()` used in conjunction with `lm()`. To begin, we will save the outputs from both `summary_lm2` and `summary` functions.
+```{r}
+summary_mod_lm2 = summary_lm2(mod_lm2, res_display = FALSE)
+summary_mod_lm = summary(mod_lm)
+```
+
+**Compare: Residuals**
+```{r}
+all.equal(summary_mod_lm2$residuals, summary_mod_lm$residuals) 
+bench::mark(summary_mod_lm2$residuals, summary_mod_lm$residuals)
+```
+
+**Compare: Coefficients **
+```{r}
+all.equal(as.matrix(summary_mod_lm2$coefficients), as.matrix(summary_mod_lm$coefficients)) 
+bench::mark(as.matrix(summary_mod_lm2$coefficients), as.matrix(summary_mod_lm$coefficients))
+```
+
+**Compare: Sigma**
+```{r}
+all.equal(summary_mod_lm$sigma, summary_mod_lm2$RSE) 
+bench::mark(summary_mod_lm$sigma, summary_mod_lm2$RSE) 
+```
+
+**Compare: R Squared **
+```{r}
+all.equal(as.matrix(summary_mod_lm2$r.squared), as.matrix(summary_mod_lm$r.squared)) 
+bench::mark(as.matrix(summary_mod_lm2$r.squared), as.matrix(summary_mod_lm$r.squared))
+```
+
+**Compare: Adjusted R Squared **
+```{r}
+all.equal(summary_mod_lm2$adj.r.squared, summary_mod_lm$adj.r.squared)
+bench::mark(summary_mod_lm2$adj.r.squared, summary_mod_lm$adj.r.squared)
+```
+
+**Compare: F statistics and related p-values**
+```{r}
+all.equal(summary_mod_lm2$fstatistic, summary_mod_lm$fstatistic)
+bench::mark(summary_mod_lm2$fstatistic, summary_mod_lm$fstatistic)
+```
+
+**Compare: Unscaled Covariance**
+```{r}
+all.equal(summary_mod_lm2$cov.unscaled, summary_mod_lm$cov.unscaled)
+bench::mark(summary_mod_lm2$cov.unscaled, summary_mod_lm$cov.unscaled)
+```
