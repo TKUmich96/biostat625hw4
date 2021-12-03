@@ -76,7 +76,7 @@ summary_lm2 = function(lm_mod, res_display = TRUE){
   
   if(res_display == T){
     cat("Call: ", "\n", output$call, "\n", ' ', "\n", "Residuals: ","\n",sep ="")
-    print(output$resid_val.tb)
+    print(output$resd.tb)
     cat("\n","Coefficients: ", "\n",sep="")
     print(output$coef.tb)
     cat("---","\n", "Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1","\n",sep ="")
