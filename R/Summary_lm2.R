@@ -12,7 +12,7 @@
 #'
 #'@export
 
-summary_lm2 = function(lm_mod, res_display = F){
+summary_lm2 = function(lm_mod, res_display = TRUE){
   beta_coef = lm_mod$coefficients
   
   res = get_Cal_val(lm_mod$x,lm_mod$y)
