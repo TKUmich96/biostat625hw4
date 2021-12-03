@@ -1,8 +1,8 @@
 #'summary_lm2
 #'
-#'Summarize fit for linear regression models
+#'summary_lm2 is used to summarize fit for linear regression models
 #'
-#'@param output return of lm2.
+#'@param lm_mod return of lm2.
 #'
 #'@return a list that contains the following values: call, residuals, coefficients, RSE, df.residual, r.squared, adj.r.squared, fstatistic, f.pval, missing.N, cov.unscaled
 #'
@@ -83,6 +83,3 @@ summary_lm2 = function(lm_mod){
   
   return(invisible(output))
 }
-
-# lm_mod = lm2(formula = quality ~ volatile.acidity * citric.acid, data = wine, res_display = F)
-# summary_lm2(lm_mod)

@@ -6,6 +6,18 @@
 
 using namespace Rcpp;
 
+// get_Cal_val
+Rcpp::List get_Cal_val(arma::mat x, arma::mat y);
+RcppExport SEXP _lm2Wsmry_get_Cal_val(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(get_Cal_val(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpparma_hello_world
 arma::mat rcpparma_hello_world();
 RcppExport SEXP _lm2Wsmry_rcpparma_hello_world() {
@@ -51,6 +63,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_lm2Wsmry_get_Cal_val", (DL_FUNC) &_lm2Wsmry_get_Cal_val, 2},
     {"_lm2Wsmry_rcpparma_hello_world", (DL_FUNC) &_lm2Wsmry_rcpparma_hello_world, 0},
     {"_lm2Wsmry_rcpparma_outerproduct", (DL_FUNC) &_lm2Wsmry_rcpparma_outerproduct, 1},
     {"_lm2Wsmry_rcpparma_innerproduct", (DL_FUNC) &_lm2Wsmry_rcpparma_innerproduct, 1},
