@@ -1,0 +1,88 @@
+#'summary_lm2
+#'
+#'Summarize fit for linear regression models
+#'
+#'@param output return of lm2.
+#'
+#'@return a list that contains the following values: call, residuals, coefficients, RSE, df.residual, r.squared, adj.r.squared, fstatistic, f.pval, missing.N, cov.unscaled
+#'
+#'@examples
+#'
+#'@importFrom stats model.matrix
+#'
+#'@export
+
+summary_lm2 = function(lm_mod){
+  beta_coef = lm_mod$coefficients
+  
+  res = get_Cal_val(lm_mod$x,lm_mod$y)
+  fitted_val = res$fitted_val
+  resid_val = res$resid_val
+  df.residual = res$df
+  
+  ########## Residuals ##########
+  resid_val.tb = round(quantile(resid_val),4)
+  names(resid_val.tb) = c("Min", "1Q", "Median", "3Q", "Max")
+
+  ########## Standard Error ##########
+  SSyy = sum((lm_mod$y-mean(lm_mod$y))^2)
+  SSE = sum(resid_val^2)
+  RSE = sqrt(SSE/df.residual)
+  SES = sqrt(diag(res$xtx)) * sqrt(SSE/df.residual)
+  
+  ########## T statistics and its related P-values ########## 
+  tstats = beta_coef[,1] / SES
+  pvalues = 2*pt(abs(tstats), df = df.residual, lower.tail=FALSE)
+  coef_tb = data.frame("Estimate" = round(beta_coef,4), "Std. Error" = round(SES,4),
+                       "t value" = round(tstats,3), "Pr(>|t|)" = signif(pvalues,3),check.names = F)
+  sig = c()
+  sig = sapply(1:length(pvalues), function(i) {
+    if(pvalues[i] < 0.001){sig[i] = '***'} 
+    else if (pvalues[i] < 0.01){sig[i] = '** '}
+    else if (pvalues[i] < 0.05){sig[i] = '*  '}
+    else if (pvalues[i] < 0.1){sig[i] = '.  '} 
+    else{sig[i] = ''}
+  })
+  coef_res = cbind(coef_tb, sig)
+  colnames(coef_res)[5] = ""
+
+  ########## R-Squared ##########
+  R2  = 1- sum(resid_val^2) / SSyy
+  R2adj  = 1 - (1-R2)* (nrow(lm_mod$x)-1)/df.residual
+  
+  ########## F statistics ##########
+  S1sq = (SSyy-SSE)/(ncol(lm_mod$x)-1)
+  S2sq = SSE/df.residual
+  Fstat  = S1sq/S2sq
+  F.stat3  = c(Fstat, ncol(lm_mod$x)-1, df.residual)
+  names(F.stat3)  = c("value", "numdf", "dendf")
+  
+  F.p_val  = pf(Fstat, F.stat3[2], F.stat3[3], lower.tail = FALSE)
+  
+  ########## Unscaled var-covarience matrix ##########
+  var_cov_mat  = solve(t(lm_mod$x) %*% lm_mod$x)
+  
+  output  = list(lm_mod$call, resid_val.tb, coef_res, signif(RSE,4), df.residual, signif(R2,4), signif(R2adj,4), 
+                 round(F.stat3,3), signif(F.p_val,4), lm_mod$missing.N, var_cov_mat)
+  names(output)  = c("call", "residuals", "coefficients", "RSE", "df","r.squared", "adj.r.squared", 
+                     "fstatistic","f.pval", "missing.N","cov.unscaled")
+  
+  cat("Call: ", "\n", output$call, "\n", ' ', "\n", "Residuals: ","\n",sep ="")
+  print(output$residuals)
+  cat("\n","Coefficients: ", "\n",sep="")
+  print(output$coefficients)
+  cat("---","\n", "Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1","\n",sep ="")
+  cat("\n","Residual standard error: ", output$RSE, " on ", output$df, " degrees of freedom","\n",sep ="")
+  if(output$missing.N>0){
+    cat("  (",output$missing.N," observation deleted due to missingness)","\n",sep="")
+  }
+  
+  cat(c("Multiple R-Squared: ", output$r.squared, ", Adjusted R-squared: ", output$adj.r.squared, "\n",
+        "F-Statistic: ", output$fstatistic[1], " on ", output$fstatistic[2], " and ", output$fstatistic[3],
+        " DF, p-value: ", output$f.pval), sep = "")
+  
+  return(invisible(output))
+}
+
+# lm_mod = lm2(formula = quality ~ volatile.acidity * citric.acid, data = wine, res_display = F)
+# summary_lm2(lm_mod)
