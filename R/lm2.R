@@ -5,6 +5,8 @@
 #'@param formula An object of class "formula" that models regression to be fit
 #'
 #'@param data Data that perform the linear regression on
+#'#'
+#'@param na.handle Opition to deal with NA. Three options valid: "na.omit"-- omit NA in data, "na.pass"-- do not change on data, and "na.fail" -- Report an error and stop the function
 #'
 #'@param res_display Bool value that used to contorl display lm2 result or not
 #'
@@ -19,7 +21,7 @@
 #'
 #'@export
 
-lm2 = function(formula, data, res_display = TRUE){
+lm2 = function(formula, data, na.handle = "na.omit", res_display = TRUE){
   library(Rcpp)
 
   otcm_var = all.vars(formula)[1]
@@ -35,11 +37,15 @@ lm2 = function(formula, data, res_display = TRUE){
   data = data[,extr_ind]
   org_n = nrow(data)
 
-  ########## check NA and perform na.action's default with na.omit ##########
+  ########## check NA and perform na.handle's default with na.omit ##########
   if(any(is.na(data))){
-    data = data[complete.cases(data), ]
-  } else {
-    data = data
+    if(na.handle == "na.omit"){
+      data = data[complete.cases(data), ]
+    } else if(na.handle == "na.pass"){
+      data = data
+    } else if(na.handle == "na.fail"){
+      stop("Missing values contains in study, please handle!")
+    }
   }
   missing_n = org_n - nrow(data)
 
