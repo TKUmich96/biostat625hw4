@@ -1,12 +1,17 @@
 Package: lm2Wsmry
 Type: Package
-Title: What the package does (short line)
+Title: Fit a linear regression and return related summary statistics
 Version: 1.0
 Date: 2021-12-03
-Author: Who wrote it
+Author: Tiankai Xie (tiankai@umich.edu)
 Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Description: lm2Wsmry is a package for homework project process. By this package, a linear regression can be fitted, and a related summary output contains information like residuals, coefficient, standard errors, R^2, adjusted R^2, F statistics, related p-value and some other statistics value can be achieved. 
+This package is trying to reproduce the output result given by lm() and summary(lm()) in base, by lm2() and summary_lm2() respectively. To have more details on each function, please check the help page for each function.
+License: GPL-3
 Imports: Rcpp (>= 1.0.5)
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.1.1
+Suggests: 
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr
