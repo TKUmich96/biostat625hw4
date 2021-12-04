@@ -13,23 +13,22 @@
 The DESCRIPTION file:
 \packageDESCRIPTION{lm2Wsmry}
 \packageIndices{lm2Wsmry}
-~~ An overview of how to use the package, including the most important functions ~~
+lm2Wsmry is a package for homework project process. By this package, a linear regression can be fitted, and a related summary output contains information like residuals, coefficient, standard errors, R^2, adjusted R^2, F statistics, related p-value and some other statistics value can be achieved. This package is trying to reproduce the output result given by lm() and summary(lm()) in base, by lm2() and summary_lm2() respectively. To have more details on each function, please check the help page for each function.
 }
 \author{
 \packageAuthor{lm2Wsmry}
 
 Maintainer: \packageMaintainer{lm2Wsmry}
 }
-\references{
-~~ Literature or other references for background information ~~
-}
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R ~~
-~~ documentation directory ~~
-\keyword{ package }
-\seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
-}
+
 \examples{
-~~ simple examples of the most important functions ~~
+lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.omit")
+result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+result$coefficients
+
+summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F))
+
+result = summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F), res_display = F)
+result$resd.tb
+result$rank
 }
