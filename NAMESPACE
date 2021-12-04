@@ -1,3 +1,9 @@
 useDynLib(lm2Wsmry, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
+export(lm2)
+export(summary_lm2)
+importFrom(stats,model.matrix)
+importFrom(stats,pt)
+importFrom(stats,quantile)
+
 exportPattern("^[[:alpha:]]+")
