@@ -1,3 +1,15 @@
+test_that("summary_lm2: good significant level", {
+  expect_output(summary_lm2(lm2(formula = Rape ~ Murder+Assault, data = USArrests, res_display = F)))
+})
+
+test_that("summary_lm2: bad significant level", {
+  expect_output(summary_lm2(lm2(formula = Murder~Assault+UrbanPop, data = USArrests, res_display = F)))
+})
+
+test_that("summary_lm2: report missing", {
+  expect_output(summary_lm2(lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.omit", res_display = F)))
+})
+
 test_that("summary_lm2: Residuals Correct", {
   expect_equal(summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F))$residuals,
                summary(lm(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests))$residuals)

@@ -2,8 +2,12 @@ test_that("lm2: test default na.handle & res_display work", {
   expect_output(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests))
 })
 
-test_that("lm2: test na.fail na.action works", {
+test_that("lm2: test na.fail na.handle works", {
   expect_error(lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.fail"))
+})
+
+test_that("lm2: test na.omit na.handle works", {
+  expect_output(lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.omit"))
 })
 
 test_that("lm2: missing.N Correct", {
