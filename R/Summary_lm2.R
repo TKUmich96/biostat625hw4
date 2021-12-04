@@ -26,8 +26,8 @@ summary_lm2 = function(lm_mod, res_display = TRUE){
   df.residual = lm_mod$df
   betas = lm_mod$betas
   
-  sourceCpp("CPP_CalValue.cpp")
-  res = get_Cal_val(lm_mod$x,lm_mod$y)
+  # sourceCpp("CPP_CalValue.cpp")
+  # res = get_Cal_val(lm_mod$x,lm_mod$y)
   
   ########## Residuals ##########
   resid_val.tb = round(quantile(resid_val),4)
@@ -37,8 +37,10 @@ summary_lm2 = function(lm_mod, res_display = TRUE){
   SSyy = sum((lm_mod$y-mean(lm_mod$y))^2)
   SSE = sum(resid_val^2)
   RSE = sqrt(SSE/df.residual)
-  SES = sqrt(diag(res$xtx)) * sqrt(SSE/df.residual)
-  
+  # SES = sqrt(diag(res$xtx)) * sqrt(SSE/df.residual)
+  xtx = solve(t(lm_mod$x) %*% lm_mod$x)
+  SES = sqrt(diag(xtx)) * sqrt(SSE/df.residual)
+
   ########## T statistics and its related P-values ########## 
   tstats = betas / SES
   pvalues = 2*pt(abs(tstats), df = df.residual, lower.tail=FALSE)

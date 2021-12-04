@@ -24,8 +24,7 @@
 #'@export
 
 lm2 = function(formula, data, na.handle = "na.omit", res_display = TRUE){
-  library(Rcpp)
-
+  
   otcm_var = all.vars(formula)[1]
   dpdt_var = labels(terms(formula))
   covariates = c(otcm_var, dpdt_var)
@@ -49,24 +48,32 @@ lm2 = function(formula, data, na.handle = "na.omit", res_display = TRUE){
   }
   missing_n = org_n - nrow(data)
 
-  y <- as.matrix(data[,which(colnames(data) == otcm_var)])
-  x <- model.matrix(formula, data = data)
+  y = as.matrix(data[,which(colnames(data) == otcm_var)])
+  x = model.matrix(formula, data = data)
 
-  ########## Calculate coeffficents, fitted value, residuals and degree of freedom  By RCPP ##########
-  sourceCpp("CPP_CalValue.cpp")
-  res = get_Cal_val(x,y)
+  # ########## Calculate coeffficents, fitted value, residuals and degree of freedom ##########
+  # 
+  # Note: initially would like to do RCPP, however, have a hard time to do continous intergration on GitHub
+  # 
+  # library(Rcpp)
+  # sourceCpp("CPP_CalValue.cpp")
+  # res = get_Cal_val(x,y)
 
-  beta = res$beta
+  # beta = res$beta
+  beta = solve(t(x) %*% x) %*% t(x) %*% y
   rownames(beta) = c('(Intercept)',dpdt_var)
   coef = beta[,1]
   
-  resid_val = res$resid_val[,1]
+  # resid_val = res$resid_val[,1]
+  resid_val = as.vector(y - x %*% beta)
   names(resid_val) = row.names(data)
   
-  fitted_val = res$fitted_val[,1]
+  # fitted_val = res$fitted_val[,1]
+  fitted_val = as.vector(x %*% beta)
   names(fitted_val) = row.names(data)
   
-  df.residual = res$df
+  # df.residual = res$df
+  df.residual = nrow(x)-ncol(x)
   
   # noquote could take string from quotation marks
   call = noquote(paste(c('lm(formula = ', formula, ')'), collapse = ''))
