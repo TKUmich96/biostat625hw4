@@ -22,4 +22,6 @@ The package contains two functions that used to fit a linear regression model, a
 
 Please vignettes in tutorial.Rmd for more details
 
- 
+#### Note On Rcpp usage
+Rcpp code has been de-actived in the src file. When I test it locally, it worked, but cannot pass continuous integration. 
+If you want to check how it helps to speed up my calculation, for free to comment it back.
