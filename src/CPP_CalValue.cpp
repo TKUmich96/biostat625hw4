@@ -1,8 +1,8 @@
 // #include <RcppArmadillo.h>
 // // [[Rcpp::depends(RcppArmadillo)]]
 // //' CPP_CalValue
-// //' 
-// //' Use RCPPArmadillo to speed up calculation for 
+// //'
+// //' Use RCPPArmadillo to speed up calculation for
 // //' inside function, do not need to export
 // //' @param x matrix of independent variables
 // //' @param y matrix of dependent variables
@@ -23,9 +23,9 @@
 //   arma::vec beta = xtx * xt * y;
 //   arma::vec fitted_val = x * beta;
 //   arma::vec resid_val = y - fitted_val;
-//   
+// 
 //   double df = x.n_rows - x.n_cols;
-//   
+// 
 //   return Rcpp::List::create(Rcpp::Named("beta")=beta,
 //                             Rcpp::Named("fitted_val")=fitted_val,
 //                             Rcpp::Named("resid_val")=resid_val,
