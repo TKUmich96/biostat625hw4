@@ -9,11 +9,8 @@
 #'@return a list that contains the following values: call(formula), residuals, coefficients, fitted.values, RSE, df(degree of freedom), r.squared, adj.r.squared, F statistic, f.pval(p-value), missing.N(missing numbers of data due to NA), cov.unscaled(unscaled covarience), rank, resd.tb(residual quntile table), coef.tb(coefficient table with significant level).
 #'
 #'@examples
-#'summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F))
+#'summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE))
 #'
-#'result = summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F), res_display = F)
-#'result$resd.tb
-#'result$rank
 #'
 #'@importFrom stats pt quantile
 #'

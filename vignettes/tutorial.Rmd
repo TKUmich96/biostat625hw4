@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(lm2Wsmry)
+library(bench)
 ```
 
 ##### For non-NA case
@@ -43,12 +44,12 @@ lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests)
 **Use the function lm2 to return output without result displaying**
 ```{r}
 # nothing shows up
-lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE)
 ```
 
 ```{r}
 # get the information in the output
-result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE)
 result$coefficients
 ```
 
@@ -81,7 +82,7 @@ lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.fail")
 ### Benchmark `lm2` against `lm`:
 In this section, we will compare the outputs of `lm2()` against `lm()`. To begin, we will save the outputs from both `lm2` and `lm` functions.
 ```{r}
-mod_lm2 <- lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+mod_lm2 <- lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE)
 mod_lm <- lm(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests)
 ```
       
@@ -106,20 +107,20 @@ bench::mark(mod_lm2$fitted.values, mod_lm$fitted.values)
 **Use the function summary_lm2 to display result**
 *Note: the default of res_display is set to TRUE if input value is excluded*
 ```{r}
-summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F))
+summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE))
 ```
   
 **Use the function lm2 to return output without result displaying**
 ```{r}
 # nothing shows up
-summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F), res_display = F)
+summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE), res_display = FALSE)
 ```
 
 #### Access calculated statistics
 To save important information that calculated, `$` could be used. Variables that avaliable for accessing are: residual table (in quartiles), coefficients, standard error, t-values, and p-values, which are displayed in the output, and variance-covarience matrix  and rank, which are not displayed in the output.
 ```{r}
 # get the information in the output
-result = summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F), res_display = F)
+result = summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE), res_display = FALSE)
 # something displays in the result
 result$resd.tb
 # something that does not disply in the result

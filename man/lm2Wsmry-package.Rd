@@ -23,12 +23,12 @@ Maintainer: \packageMaintainer{lm2Wsmry}
 
 \examples{
 lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.omit")
-result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE)
 result$coefficients
 
-summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F))
+summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE))
 
-result = summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F), res_display = F)
+result = summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE), res_display = FALSE)
 result$resd.tb
 result$rank
 }

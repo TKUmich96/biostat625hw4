@@ -14,7 +14,7 @@
 #'@examples
 #'lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.omit")
 #'
-#'result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+#'result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE)
 #'result$coefficients
 #'
 #'@return A list that contains the following values: call(formula), coefficients, residuals, fitted.values, x(independent variables), y(dependent variable),missing.N(missing numbers of data due to NA), df(residual degree of freedom) and betas(coefficient in other format)

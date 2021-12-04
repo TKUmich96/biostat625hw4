@@ -24,7 +24,7 @@ lm2 is used to fit linear models with regression.
 \examples{
 lm2(formula = Temp ~ Wind + Solar.R, data = airquality, na.handle = "na.omit")
 
-result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F)
+result = lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE)
 result$coefficients
 
 }

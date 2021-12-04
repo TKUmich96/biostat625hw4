@@ -18,10 +18,7 @@ a list that contains the following values: call(formula), residuals, coefficient
 summary_lm2 is used to summarize fit for linear regression models.
 }
 \examples{
-summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F))
+summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = FALSE))
 
-result = summary_lm2(lm2(formula = Rape ~ Murder+Assault+UrbanPop, data = USArrests, res_display = F), res_display = F)
-result$resd.tb
-result$rank
 
 }
